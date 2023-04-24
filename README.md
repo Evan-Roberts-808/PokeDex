@@ -34,9 +34,15 @@
 
 ## Wireframe
 
-<p> In repo files as pdf </p>
+<img src="./img/wireframe1024_1.jpg" width="100%" />
+<img src="./img/wireframe1024_2.jpg" width="100%" />
+<img src="./img/wireframe1024_3.jpg" width="100%" />
 
 <br>
+
+## Endpoint
+
+https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0
 
 ### Collaborators
 
