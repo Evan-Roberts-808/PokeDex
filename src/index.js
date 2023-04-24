@@ -5,22 +5,24 @@ document.addEventListener('DOMContentLoaded', () => {
     let pokemonList = document.querySelector('#pokemon-list')
     let search = document.querySelector('#search')
 
-    fetch('https://pokeapi.co/api/v2/pokemon?limit=100000') //fetch the pokemon data (this returns a list of objects with pokemon name and url)
-    .then (response => response.json())
-    .then (allPokemon => {
-        allPokemon.results.forEach(pokemon => fetchPokemonData(pokemon)) // for each pokemon in the list, run fetchPokemonData()
-            
-    })
-        
-    function fetchPokemonData(pokemon) { // fetch the url of the requested pokemon object
-        let url = pokemon.url
-        fetch(url)
-        .then (response => response.json())
-        .then (function (pokeData) {
-            console.log(pokeData)
-            renderPokemonCards(pokeData)
+    function fetchPokemonData(pokemon) {
+        return fetch(pokemon.url)
+          .then(response => response.json())
+          .then(pokeData => {
+            console.log(pokeData);
+            return pokeData;
+          });
+      }
+      fetch('https://pokeapi.co/api/v2/pokemon?limit=1008')
+        .then(response => response.json())
+        .then(allPokemon => {
+          const pokemonPromises = allPokemon.results.map(pokemon => fetchPokemonData(pokemon));
+          return Promise.all(pokemonPromises);
         })
-    }
+        .then(pokemonData => {
+          pokemonData.sort((a, b) => a.id - b.id); // Sort the data by ID
+          pokemonData.forEach(pokemon => renderPokemonCards(pokemon));
+        });
 
     function renderPokemonCards(pokemon) {
         let newCard = document.createElement('div')
@@ -38,4 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         newCard.append(pokeDexNum, pokeImg, pokeName)
         pokemonList.append(newCard)
     }
-})
+
+    initialFetch().then(result => console.log(result))
+
+}) //end of the page, do not delete
