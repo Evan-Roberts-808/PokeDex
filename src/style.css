@@ -12,16 +12,18 @@ body {
     padding-top: 20px;
 }
 
+/* Header Styling */
+
 #title {
     color: #fff;
     font-size: 50px;
 }
 
-#search, #search-button {
+#search, #search-button, #gen-filter {
     margin-right: 10px;
 }
 
-#type-label {
+#type-label, #gen-label {
     margin-right: 10px;
     margin-bottom: 0px;
     margin-top: 7px;
