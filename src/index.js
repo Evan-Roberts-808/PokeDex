@@ -46,7 +46,20 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     }
 
-    let pokeList = document.querySelectorAll('.card')
+     search.addEventListener('keyup', (e) => { //this function checks search bar
+      let searchTerm = search.value.toLowerCase().trim() //toLowerCase lowercases string, .trim removes excess yt space//
+      let allDaCards = document.querySelectorAll('.card')
+      allDaCards.forEach(card => {
+        let cardName = card.querySelector('.poke-name').textContent.toLowerCase()
+        let cardId = card.querySelector('.dex-num').textContent //calling the dex id
+        if (cardName.includes(searchTerm) || cardId.includes(searchTerm)){
+          card.style.display=''
+        } else{
+          card.style.display='none'
+        }
+      })
+     }
+     )
 
 
 
