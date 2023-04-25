@@ -35,11 +35,11 @@
           placeholder="Enter Name or Dex #"
           for="search-button"
         />
-        <button id="search-button" type="submit" class="button pushable">
+        <!-- <button id="search-button" type="submit" class="button pushable">
           <span class="shadow"></span>
           <span class="edge"></span>
           <span class="front">Search</span>
-        </button>
+        </button> -->
 
         <label for="gen-filter" id="gen-label">Filter by Gen:</label>
         <select name="gen-filter" id="gen-filter">
@@ -80,6 +80,30 @@
     </section>
 
     <!-- Modal -->
+    <div class='modal'>
+      <div class='modal-content'> 
+        <div class='modal-header'>
+          <button type='button' class='close' data-dismiss='modal'>X</button>
+        </div>
+          <div class='col-sm-6'>
+            <h3 id='modal-dex-num'> </h3>
+            <img id='modal-img'>
+
+          </div>
+          <div class='col-sm-6'>
+            <h3 id='modal-poke-name'></h3>
+            <h3 id='modal-height'></h3>
+            <h3 id='modal-weight'></h3>
+            <button id="add-to-team" type="submit" class="button pushable">
+              <span class="shadow"></span>
+              <span class="edge"></span>
+              <span class="front">Add to team</span>
+            </button>
+          </div>         
+      </div>
+
+
+    </div>
 
     <!-- Body -->
     <section class="container">
