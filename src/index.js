@@ -55,17 +55,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function displayModal(currentPokemon) {
       modal.style.display = 'block'
-      let modalDexNum = document.querySelector('#modal-dex-num')
       let modalImg = document.querySelector('#modal-img')
       let modalName = document.querySelector('#modal-poke-name')
       let modalHeight = document.querySelector('#modal-height')
       let modalWeight = document.querySelector('#modal-weight')
       let heightInM = (currentPokemon.height / 10)
       let weightInKg = (currentPokemon.weight / 10)
+      // let modalType = document.querySelector('#modal-type')
+      let types = []
+      let counter = 0
+      let dualType = false 
 
-      modalDexNum.textContent = currentPokemon.id
+      let typeTest = currentPokemon.types.map(type => {
+        typeName = type.type.name 
+        types[counter] = typeName
+        counter += 1
+      }) 
+
+      console.log(types)
+
       modalImg.src = currentPokemon.sprites.front_default
-      modalName.textContent = currentPokemon.name
+      modalName.textContent =  `No:${currentPokemon.id} ${currentPokemon.name}`
       modalHeight.textContent = `height: ${heightInM} m`
       modalWeight.textContent = `weight: ${weightInKg} kg`
     }
