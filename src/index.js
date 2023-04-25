@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentPokemon
     let pokemonList = document.querySelector('#pokemon-list')
     let search = document.querySelector('#search')
+    //let card
 
     function fetchPokemonData(pokemon) {
         return fetch(pokemon.url)
@@ -39,8 +40,18 @@ document.addEventListener('DOMContentLoaded', () => {
         pokeDexNum.textContent = pokemon.id
         newCard.append(pokeDexNum, pokeImg, pokeName)
         pokemonList.append(newCard)
+
+        newCard.addEventListener('mouseover', (e) => {
+            newCard.style.cursor = 'pointer';
+        })
     }
 
-    initialFetch().then(result => console.log(result))
+    let pokeList = document.querySelectorAll('.card')
+
+
+
+
+
+
 
 }) //end of the page, do not delete
