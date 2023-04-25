@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentPokemon
     let pokemonList = document.querySelector('#pokemon-list')
     let search = document.querySelector('#search')
+    let modal = document.querySelector('.modal')
     //let card
 
     function fetchPokemonData(pokemon) {
@@ -44,6 +45,29 @@ document.addEventListener('DOMContentLoaded', () => {
         newCard.addEventListener('mouseover', (e) => {
             newCard.style.cursor = 'pointer';
         })
+        
+        //Modal event
+        newCard.addEventListener('click', () => {
+          currentPokemon = pokemon
+          displayModal(currentPokemon)
+        })
+    }
+
+    function displayModal(currentPokemon) {
+      modal.style.display = 'block'
+      let modalDexNum = document.querySelector('#modal-dex-num')
+      let modalImg = document.querySelector('#modal-img')
+      let modalName = document.querySelector('#modal-poke-name')
+      let modalHeight = document.querySelector('#modal-height')
+      let modalWeight = document.querySelector('#modal-weight')
+      let heightInM = (currentPokemon.height / 10)
+      let weightInKg = (currentPokemon.weight / 10)
+
+      modalDexNum.textContent = currentPokemon.id
+      modalImg.src = currentPokemon.sprites.front_default
+      modalName.textContent = currentPokemon.name
+      modalHeight.textContent = `height: ${heightInM} m`
+      modalWeight.textContent = `weight: ${weightInKg} kg`
     }
 
      search.addEventListener('keyup', (e) => { //this function checks search bar
@@ -61,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
      }
      )
 
-
+     
 
 
 
