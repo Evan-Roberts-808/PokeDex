@@ -3,10 +3,23 @@ document.addEventListener('DOMContentLoaded', () => {
   ///////////// Global Variables & State 
   let pokemon
   let currentPokemon
+  let currentTeamMember
   let pokemonList = document.querySelector('#pokemon-list')
   let search = document.querySelector('#search')
   let modal = document.querySelector('.modal')
+  let showTeamBtn = document.querySelector('#show-team')
+  let sideBar = document.querySelector('.sidebar')
+  let sideCloseBtn = document.querySelector('.closebtn')
 
+  //fetching from localhost//
+  fetch('http://localhost:3000/team')
+  .then(resp => resp.json())
+  .then(imgData => {
+    teamImg = imgData;
+    addToTeamBar(teamImg);
+  })
+
+  //fetching from poke api//
   fetch('https://pokeapi.co/api/v2/pokemon?limit=1008')
      .then(response => response.json())
      .then(allPokemon => {
@@ -22,8 +35,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   search.addEventListener('keyup', searchFunctionality)
 
+  showTeamBtn.addEventListener('click', () => {
+    sideBar.style.width = "20%"
+  })
+
+  sideCloseBtn.addEventListener('click', () => {
+    sideBar.style.width = '0%'
+  })
   //////////// Functions //////////////
 
+  //fetching pokemon urls from pokeAPI to use in first GET fetch
   function fetchPokemonData(pokemon) {
      return fetch(pokemon.url)
         .then(response => response.json())
@@ -33,6 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
   }
 
+  //parses pokeData and renders to DOM
   function renderPokemonCards(pokemon) {
      let newCard = document.createElement('div')
      newCard.classList.add('card', 'col-sm-3')
@@ -59,6 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
      })
   }
 
+//Populates content to modal
   function displayModal(currentPokemon) {
     modal.style.display = "block";
     let modalDexNum = document.querySelector("#modal-dex-num");
@@ -70,6 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let heightInM = currentPokemon.height / 10;
     let weightInKg = currentPokemon.weight / 10;
   
+    //iterating through objects to grab pokemon type values to populate textContent
     let type1 = "";
     let type2 = "";
     let dualType = false;
@@ -90,6 +114,28 @@ document.addEventListener('DOMContentLoaded', () => {
     modalTypes.textContent = type2
       ? `type: ${type1} / ${type2}`
       : `type: ${type1}`;
+
+    //close button
+    document.querySelector('.close').addEventListener('click', () => {
+      modal.style.display = "none";
+    })
+
+    //add to team
+    let addToTeamBtn = document.querySelector("#add-to-team")
+    addToTeamBtn.addEventListener('click', () => {
+      const imgUrl = currentPokemon.sprites.front_default
+     
+    //POST fetch to sidebar
+    fetch('http://localhost:3000/team', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        img_url: imgUrl
+      })
+    })
+    })
   }
   
  
@@ -107,4 +153,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
      })
   }
+
+  //appends imgs from db.json to sidebar
+  function addToTeamBar(imgData) {
+    imgData.forEach(img => {
+      let anchor = document.createElement('a')
+      let sideBarImage = document.createElement('img')
+      sideBarImage.src = img.img_url
+      anchor.className = "team"
+      anchor.appendChild(sideBarImage)
+      sideBar.appendChild(anchor)
+
+      //Deletes img on click 'DELETE fetch'
+      sideBarImage.addEventListener('click', () => {
+        currentTeamMember = img
+          fetch(`http://localhost:3000/team/${currentTeamMember.id}`, {
+          method: 'DELETE'
+        })
+      })
+    })
+  } 
+
+
 }) //end of the page, do not delete
