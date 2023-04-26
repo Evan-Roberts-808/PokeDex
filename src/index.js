@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let showTeamBtn = document.querySelector('#show-team')
   let sideBar = document.querySelector('.sidebar')
   let sideCloseBtn = document.querySelector('.closebtn')
+  let body = document.querySelector('#slideAnimation')
+  // let header = document.querySelector('#header')
 
   //fetching from localhost//
   fetch('http://localhost:3000/team')
@@ -37,11 +39,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   showTeamBtn.addEventListener('click', () => {
     sideBar.style.width = "20%"
+    body.style.marginRight = "20%"
   })
 
   sideCloseBtn.addEventListener('click', () => {
     sideBar.style.width = '0%'
+    body.style.marginRight = '0%'
   })
+
+
+
   //////////// Functions //////////////
 
   //fetching pokemon urls from pokeAPI to use in first GET fetch
@@ -173,6 +180,10 @@ document.addEventListener('DOMContentLoaded', () => {
       })
     })
   } 
+
+
+
+
 
 
 }) //end of the page, do not delete

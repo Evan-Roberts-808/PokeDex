@@ -19,7 +19,7 @@
     />
     <link rel="stylesheet" href="./src/style.css" />
   </head>
-  <body>
+  <body id="slideAnimation">
     <!-- Header -->
     <section id="header" class="container">
       <!-- Title -->
@@ -81,12 +81,20 @@
           <span class="edge"></span>
           <span class="front">Show Team</span>
         </button>
+        <a href="#pokemon-list">
+          <button class="pushable" id="scrollTop">
+            <span class="shadow"></span>
+            <span class="edge"></span>
+            <span class="front">Return to top</span>
+          </button>
+        </a>
       </div>
     </section>
 
     <!-- Team Bar -->
     <div id="mySidebar" class="sidebar">
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <h4>Click Pokemon To Remove</h4>
     </div>
 
 
@@ -123,7 +131,7 @@
     </div>
 
     <!-- Body -->
-    <section class="container">
+    <section class="container" id="pokemon-container">
       <div id="pokemon-list" class="row justify-content-center">
         <!-- Placeholder example card to be removed when writing JS-->
         <!-- <div class="card col-sm-3">
@@ -133,7 +141,6 @@
         </div> -->
       </div>
     </section>
-
     <script src="./src/index.js"></script>
   </body>
 </html>
