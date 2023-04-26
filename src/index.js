@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let sideCloseBtn = document.querySelector('.closebtn')
   let body = document.querySelector('#slideAnimation')
   const header = document.getElementById("header");
-
-  // let header = document.querySelector('#header')
+  let allCards = [document.querySelectorAll('.card')]
+  let typeSelector = document.getElementById('type-filter')
 
   //fetching from localhost//
   fetch('http://localhost:3000/team')
@@ -72,9 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   //parses pokeData and renders to DOM
   function renderPokemonCards(pokemon) {
-    // pokemonSort.push(pokemon)
+    // pokemonSort.push(newCard)
      let newCard = document.createElement('div')
-     newCard.classList.add('card', 'col-sm-3')
      let pokeImg = document.createElement('img')
      pokeImg.src = pokemon.sprites.front_default
      pokeImg.classList.add('poke-img')
@@ -84,8 +83,13 @@ document.addEventListener('DOMContentLoaded', () => {
      let pokeDexNum = document.createElement('p')
      pokeDexNum.classList.add('dex-num')
      pokeDexNum.textContent = pokemon.id
+    //  newCard.append(pokeDexNum, pokeImg, pokeName, pokeTypes)
+    //  pokemonList.append(newCard)
 
+     // types on the card, test/
      let pokeTypes = document.createElement('p')
+     pokeTypes.classList.add('poke-type')
+     
      let type1 = "";
      let type2 = "";
      let dualType = false;
@@ -96,23 +100,50 @@ document.addEventListener('DOMContentLoaded', () => {
        } else {
          type2 = type.type.name;
        }})
+
        pokeTypes.textContent = type2
        ? `type: ${type1} / ${type2}`
        : `type: ${type1}`;
-    newCard.classList.add(`${type1}-bg`)
+
+       newCard.classList.add('card', 'col-sm-3', `${type1}-bg`)
+
      newCard.append(pokeDexNum, pokeImg, pokeName, pokeTypes)
      pokemonList.append(newCard)
+
+
      newCard.addEventListener('mouseover', () => {
         newCard.classList.add('hover')
      })
+
      newCard.addEventListener('mouseleave', () => {
       newCard.classList.remove('hover')
    })
+
      //Modal event
      newCard.addEventListener('click', () => {
         currentPokemon = pokemon
         displayModal(currentPokemon)
      })
+
+    //type filter search
+     typeSelector.addEventListener('change', () => { 
+      let type = typeSelector.value
+      console.log(type)
+      
+      let allCards = document.querySelectorAll('.card')
+      allCards.forEach(card => {
+        let typeName = card.querySelector('.poke-type').textContent
+        if (typeName.includes(type)) {
+          card.style.display = ''
+        }
+        else {
+          card.style.display = 'none'
+        }
+      })
+
+    }) //end of type filter
+     
+
   } //end of renderPokemon
 
 //Populates content to modal
