@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let pokemonSort = []
   let currentPokemon
   let currentTeamMember
+  let allPokemon 
   let pokemonList = document.querySelector('#pokemon-list')
   let search = document.querySelector('#search')
   let modal = document.querySelector('.modal')
@@ -12,8 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
   let sideCloseBtn = document.querySelector('.closebtn')
   let body = document.querySelector('#slideAnimation')
   let allCards = [document.querySelectorAll('.card')]
+  let typeSelector = document.getElementById('type-filter')
   // let header = document.querySelector('#header')
 
+  
   //fetching from localhost//
   fetch('http://localhost:3000/team')
   .then(resp => resp.json())
@@ -31,7 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
      })
      .then(pokemonData => {
         pokemonData.sort((a, b) => a.id - b.id); // Sort the data by ID
-        pokemonData.forEach(pokemon => renderPokemonCards(pokemon));
+        pokemonData.forEach(pokemon => {
+          allPokemon = pokemon
+          renderPokemonCards(pokemon)});
      });
 
   ///////// Event Listeners //////////
@@ -65,20 +70,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
   }
 
-  function onlyOneType(type) {
-    let allCards = document.querySelectorAll('.card')
-    allCards.forEach(card => {
-       let cardType = card.querySelector('.modal-types').textContent.toLowerCase()
-       if (cardType.includes(type)) {
-          card.style.display = ''
-       } else {
-          card.style.display = 'none'
-       }
-    })
-  }
 
   //parses pokeData and renders to DOM
   function renderPokemonCards(pokemon) {
+    // pokemonSort.push(newCard)
      let newCard = document.createElement('div')
      newCard.classList.add('card', 'col-sm-3')
      let pokeImg = document.createElement('img')
@@ -90,8 +85,31 @@ document.addEventListener('DOMContentLoaded', () => {
      let pokeDexNum = document.createElement('p')
      pokeDexNum.classList.add('dex-num')
      pokeDexNum.textContent = pokemon.id
-     newCard.append(pokeDexNum, pokeImg, pokeName)
+    //  newCard.append(pokeDexNum, pokeImg, pokeName, pokeTypes)
+    //  pokemonList.append(newCard)
+
+     // types on the card, test/
+     let pokeTypes = document.createElement('p')
+     pokeTypes.classList.add('poke-type')
+     
+     let type1 = "";
+     let type2 = "";
+     let dualType = false;
+     pokemon.types.forEach((type) => {
+       if (!dualType) {
+         type1 = type.type.name;
+         dualType = true;
+       } else {
+         type2 = type.type.name;
+       }})
+
+       pokeTypes.textContent = type2
+       ? `type: ${type1} / ${type2}`
+       : `type: ${type1}`;
+
+     newCard.append(pokeDexNum, pokeImg, pokeName, pokeTypes)
      pokemonList.append(newCard)
+
 
      newCard.addEventListener('mouseover', () => {
         newCard.classList.add('hover')
@@ -106,7 +124,30 @@ document.addEventListener('DOMContentLoaded', () => {
         currentPokemon = pokemon
         displayModal(currentPokemon)
      })
-  }
+
+    //type filter search
+     typeSelector.addEventListener('change', () => { 
+      let type = typeSelector.value
+      console.log(type)
+      
+      let allCards = document.querySelectorAll('.card')
+      allCards.forEach(card => {
+        let typeName = card.querySelector('.poke-type').textContent
+        if (typeName.includes(type)) {
+          card.style.display = ''
+        }
+        else {
+          card.style.display = 'none'
+        }
+      })
+
+    }) //end of type filter
+     
+
+  } //end of renderPokemon
+
+
+
 
 //Populates content to modal
   function displayModal(currentPokemon) {
@@ -132,6 +173,8 @@ document.addEventListener('DOMContentLoaded', () => {
         type2 = type.type.name;
       }
     });
+
+
   
     modalDexNum.textContent = currentPokemon.id;
     modalImg.src = currentPokemon.sprites.front_default;
