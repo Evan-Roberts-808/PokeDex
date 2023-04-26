@@ -70,9 +70,13 @@ document.addEventListener('DOMContentLoaded', () => {
      newCard.append(pokeDexNum, pokeImg, pokeName)
      pokemonList.append(newCard)
 
-     newCard.addEventListener('mouseover', (e) => {
-        newCard.style.cursor = 'pointer';
+     newCard.addEventListener('mouseover', () => {
+        newCard.classList.add('hover')
      })
+
+     newCard.addEventListener('mouseleave', () => {
+      newCard.classList.remove('hover')
+   })
 
      //Modal event
      newCard.addEventListener('click', () => {
