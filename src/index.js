@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let pokemonList = document.querySelector('#pokemon-list')
   let search = document.querySelector('#search')
   let modal = document.querySelector('.modal')
+  let modalContent = document.querySelector('#modal-content')
   let showTeamBtn = document.querySelector('#show-team')
   let sideBar = document.querySelector('.sidebar')
   let sideCloseBtn = document.querySelector('.closebtn')
@@ -71,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   //parses pokeData and renders to DOM
   function renderPokemonCards(pokemon) {
+    // pokemonSort.push(pokemon)
      let newCard = document.createElement('div')
      newCard.classList.add('card', 'col-sm-3')
      let pokeImg = document.createElement('img')
@@ -82,28 +84,40 @@ document.addEventListener('DOMContentLoaded', () => {
      let pokeDexNum = document.createElement('p')
      pokeDexNum.classList.add('dex-num')
      pokeDexNum.textContent = pokemon.id
-     newCard.append(pokeDexNum, pokeImg, pokeName)
-     pokemonList.append(newCard)
 
+     let pokeTypes = document.createElement('p')
+     let type1 = "";
+     let type2 = "";
+     let dualType = false;
+     pokemon.types.forEach((type) => {
+       if (!dualType) {
+         type1 = type.type.name;
+         dualType = true;
+       } else {
+         type2 = type.type.name;
+       }})
+       pokeTypes.textContent = type2
+       ? `type: ${type1} / ${type2}`
+       : `type: ${type1}`;
+    newCard.classList.add(`${type1}-bg`)
+     newCard.append(pokeDexNum, pokeImg, pokeName, pokeTypes)
+     pokemonList.append(newCard)
      newCard.addEventListener('mouseover', () => {
         newCard.classList.add('hover')
      })
-
      newCard.addEventListener('mouseleave', () => {
       newCard.classList.remove('hover')
    })
-
      //Modal event
      newCard.addEventListener('click', () => {
         currentPokemon = pokemon
         displayModal(currentPokemon)
      })
-  }
+  } //end of renderPokemon
 
 //Populates content to modal
   function displayModal(currentPokemon) {
     modal.style.display = "block";
-    let modalDexNum = document.querySelector("#modal-dex-num");
     let modalImg = document.querySelector("#modal-img");
     let modalName = document.querySelector("#modal-poke-name");
     let modalHeight = document.querySelector("#modal-height");
@@ -125,14 +139,15 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   
-    modalDexNum.textContent = currentPokemon.id;
     modalImg.src = currentPokemon.sprites.front_default;
-    modalName.textContent = currentPokemon.name;
+    modalName.textContent = `No: ${currentPokemon.id} ${currentPokemon.name}`;
     modalHeight.textContent = `height: ${heightInM} m`;
     modalWeight.textContent = `weight: ${weightInKg} kg`;
     modalTypes.textContent = type2
       ? `type: ${type1} / ${type2}`
       : `type: ${type1}`;
+
+    modalContent.classList.add(`${type1}-bg`)
 
     //close button
     document.querySelector('.close').addEventListener('click', () => {
