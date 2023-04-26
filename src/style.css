@@ -6,6 +6,7 @@
 body {
     background-color: #e0dcff;
     background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239d98c5' fill-opacity='0.3'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10S0 25.523 0 20s4.477-10 10-10zm10 8c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8zm40 40c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    transition: 0.5s; /*0.5 second transition effect to slide body after sidebar*/
 }
 
 .row {
@@ -14,12 +15,25 @@ body {
 
 /* Header Styling */
 
+#header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background: transparent
+}
+
+.scrolled {
+    background-color: #e0dcff;
+}
+
 #title {
     color: #fff;
     font-size: 50px;
 }
 
-#search, #search-button, #gen-filter {
+#search, #search-button, #gen-filter, #type-filter {
     margin-right: 10px;
 }
 
@@ -38,6 +52,7 @@ body {
     border: none;
     padding: 0;
     cursor: pointer;
+    margin-right: 10px;
 }
 
 .shadow {
@@ -90,6 +105,10 @@ body {
 
 /* Card Styling */
 
+#pokemon-container {
+    padding-top: 15vh;
+}
+
 .card {
     border-radius: 20%;
     text-align: center;
@@ -118,6 +137,15 @@ body {
     font-weight: 500;
 }
 
+/*Footer Styling*/
+
+footer a {
+    z-index: 2;
+    position: fixed;
+    right: 10vw;
+    bottom: 2vw;
+}
+
 /*Side Bar Styling*/
 .sidebar {
     height: 100%; /* 100% Full-height */
@@ -126,10 +154,11 @@ body {
     z-index: 1; /* Stay on top */
     top: 0;
     right: 0;
-    background-color: #111; /* Black*/
+    background-color: #c2bde4;
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 60px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
+    box-shadow: -10px 0 10px rgba(0, 0, 0, 0.5);
   }
   
   /* The sidebar links */
@@ -138,8 +167,24 @@ body {
     text-decoration: none;
     font-size: 25px;
     color: #818181;
-    display: block;
     transition: 0.3s;
+    text-align: center;
+    align-items: center; /* Place content */
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidebar a img {
+    position: relative;
+    display: block;
+    width: 125px;
+  }
+
+  .sidebar h4 { 
+    text-align: center;
+    font-size: 18px;
+    color: #fff;
+    font-weight: 400;
   }
 
   /* Position and style the close button (top right corner) */
@@ -148,6 +193,7 @@ body {
     top: 0;
     float: left;
     font-size: 36px;
+
   }
 
 
