@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
     modalTypes.textContent = type2
       ? `type: ${type1} / ${type2}`
       : `type: ${type1}`;
-
+    modalContent.classList.remove('normal-bg', 'fire-bg', 'water-bg', 'grass-bg', 'electric-bg', 'ice-bg', 'fighting-bg', 'poison-bg', 'ground-bg', 'flying-bg', 'psychic-bg', 'bug-bg', 'rock-bg', 'ghost-bg', 'dragon-bg', 'dark-bg', 'steel-bg', 'fairy-bg');
     modalContent.classList.add(`${type1}-bg`)
 
     //close button

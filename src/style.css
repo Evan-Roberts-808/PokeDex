@@ -222,6 +222,7 @@ footer a {
     transform: translate(-50%, -50%);
     background-color: #FEFEFE;
     width: 60vw;
+    padding: 10px;
   }
   /* The Close Button */
   .close {
@@ -253,6 +254,47 @@ footer a {
   #modal-dex-num, #modal-poke-name, #modal-height, #modal-weight {
     text-align: center;
   }
+
+  .modal .pushable {
+    position: relative;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.modal .shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.2);
+    transform: translateY(4px)
+}
+
+.modal .front {
+    display: block;
+    position: relative;
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 1.25rem;
+    color: #fff;
+    background: #7b7b7b;
+    transform: translateY(-4px)
+}
+
+.modal .edge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: #5c5c5c;
+}
 
 /* Type Styling */
 
