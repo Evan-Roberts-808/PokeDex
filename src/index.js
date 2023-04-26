@@ -1,22 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   ///////////// Global Variables & State 
-  let pokemonSort = []
+  let pokemon
   let currentPokemon
   let currentTeamMember
-  let allPokemon 
   let pokemonList = document.querySelector('#pokemon-list')
   let search = document.querySelector('#search')
   let modal = document.querySelector('.modal')
+  let modalContent = document.querySelector('#modal-content')
   let showTeamBtn = document.querySelector('#show-team')
   let sideBar = document.querySelector('.sidebar')
   let sideCloseBtn = document.querySelector('.closebtn')
   let body = document.querySelector('#slideAnimation')
+  const header = document.getElementById("header");
   let allCards = [document.querySelectorAll('.card')]
   let typeSelector = document.getElementById('type-filter')
-  // let header = document.querySelector('#header')
 
-  
   //fetching from localhost//
   fetch('http://localhost:3000/team')
   .then(resp => resp.json())
@@ -34,9 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
      })
      .then(pokemonData => {
         pokemonData.sort((a, b) => a.id - b.id); // Sort the data by ID
-        pokemonData.forEach(pokemon => {
-          allPokemon = pokemon
-          renderPokemonCards(pokemon)});
+        pokemonData.forEach(pokemon => renderPokemonCards(pokemon));
      });
 
   ///////// Event Listeners //////////
@@ -48,15 +45,18 @@ document.addEventListener('DOMContentLoaded', () => {
     body.style.marginRight = "20%"
   })
 
-  const typeSelect = document.getElementById('type-filter');
-  typeSelect.addEventListener('change', onlyOneType(typeSelect.value));
-
   sideCloseBtn.addEventListener('click', () => {
     sideBar.style.width = '0%'
     body.style.marginRight = '0%'
   })
 
-
+  window.addEventListener("scroll", () => {
+    if (window.pageYOffset > header.offsetHeight) {
+      header.classList.add("active");
+    } else {
+      header.classList.remove("active");
+    }
+  });
 
   //////////// Functions //////////////
 
@@ -70,12 +70,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
   }
 
-
   //parses pokeData and renders to DOM
   function renderPokemonCards(pokemon) {
     // pokemonSort.push(newCard)
      let newCard = document.createElement('div')
-     newCard.classList.add('card', 'col-sm-3')
      let pokeImg = document.createElement('img')
      pokeImg.src = pokemon.sprites.front_default
      pokeImg.classList.add('poke-img')
@@ -106,6 +104,8 @@ document.addEventListener('DOMContentLoaded', () => {
        pokeTypes.textContent = type2
        ? `type: ${type1} / ${type2}`
        : `type: ${type1}`;
+
+       newCard.classList.add('card', 'col-sm-3', `${type1}-bg`)
 
      newCard.append(pokeDexNum, pokeImg, pokeName, pokeTypes)
      pokemonList.append(newCard)
@@ -146,13 +146,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   } //end of renderPokemon
 
-
-
-
 //Populates content to modal
   function displayModal(currentPokemon) {
     modal.style.display = "block";
-    let modalDexNum = document.querySelector("#modal-dex-num");
     let modalImg = document.querySelector("#modal-img");
     let modalName = document.querySelector("#modal-poke-name");
     let modalHeight = document.querySelector("#modal-height");
@@ -173,17 +169,16 @@ document.addEventListener('DOMContentLoaded', () => {
         type2 = type.type.name;
       }
     });
-
-
   
-    modalDexNum.textContent = currentPokemon.id;
     modalImg.src = currentPokemon.sprites.front_default;
-    modalName.textContent = currentPokemon.name;
+    modalName.textContent = `No: ${currentPokemon.id} ${currentPokemon.name}`;
     modalHeight.textContent = `height: ${heightInM} m`;
     modalWeight.textContent = `weight: ${weightInKg} kg`;
     modalTypes.textContent = type2
       ? `type: ${type1} / ${type2}`
       : `type: ${type1}`;
+    modalContent.classList.remove('normal-bg', 'fire-bg', 'water-bg', 'grass-bg', 'electric-bg', 'ice-bg', 'fighting-bg', 'poison-bg', 'ground-bg', 'flying-bg', 'psychic-bg', 'bug-bg', 'rock-bg', 'ghost-bg', 'dragon-bg', 'dark-bg', 'steel-bg', 'fairy-bg');
+    modalContent.classList.add(`${type1}-bg`)
 
     //close button
     document.querySelector('.close').addEventListener('click', () => {
