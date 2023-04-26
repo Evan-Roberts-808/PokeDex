@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   ///////////// Global Variables & State 
-  let pokemon
+  let pokemonSort = []
   let currentPokemon
   let currentTeamMember
   let pokemonList = document.querySelector('#pokemon-list')
@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let sideBar = document.querySelector('.sidebar')
   let sideCloseBtn = document.querySelector('.closebtn')
   let body = document.querySelector('#slideAnimation')
+  let allCards = [document.querySelectorAll('.card')]
   // let header = document.querySelector('#header')
 
   //fetching from localhost//
@@ -42,6 +43,9 @@ document.addEventListener('DOMContentLoaded', () => {
     body.style.marginRight = "20%"
   })
 
+  const typeSelect = document.getElementById('type-filter');
+  typeSelect.addEventListener('change', onlyOneType(typeSelect.value));
+
   sideCloseBtn.addEventListener('click', () => {
     sideBar.style.width = '0%'
     body.style.marginRight = '0%'
@@ -59,6 +63,18 @@ document.addEventListener('DOMContentLoaded', () => {
            console.log(pokeData);
            return pokeData;
         });
+  }
+
+  function onlyOneType(type) {
+    let allCards = document.querySelectorAll('.card')
+    allCards.forEach(card => {
+       let cardType = card.querySelector('.modal-types').textContent.toLowerCase()
+       if (cardType.includes(type)) {
+          card.style.display = ''
+       } else {
+          card.style.display = 'none'
+       }
+    })
   }
 
   //parses pokeData and renders to DOM
