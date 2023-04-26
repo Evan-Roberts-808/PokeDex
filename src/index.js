@@ -189,6 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let addToTeamBtn = document.querySelector("#add-to-team")
     addToTeamBtn.addEventListener('click', () => {
       const imgUrl = currentPokemon.sprites.front_default
+      const name = currentPokemon.name
      
     //POST fetch to sidebar
     fetch('http://localhost:3000/team', {
@@ -197,7 +198,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        img_url: imgUrl
+        img_url: imgUrl,
+        name: name
       })
     })
     })
@@ -223,11 +225,39 @@ document.addEventListener('DOMContentLoaded', () => {
   function addToTeamBar(imgData) {
     imgData.forEach(img => {
       let anchor = document.createElement('a')
+      let sideBarText = document.createElement('p')
       let sideBarImage = document.createElement('img')
+      sideBarText.classList.add('sideBarName')
       sideBarImage.src = img.img_url
       anchor.className = "team"
-      anchor.appendChild(sideBarImage)
+      sideBarText.textContent = img.name
+      anchor.append(sideBarImage, sideBarText)
       sideBar.appendChild(anchor)
+      
+      sideBarText.addEventListener('click', () => {
+        const inputElement = document.createElement('input')
+        inputElement.value = sideBarText.textContent
+        sideBarText.replaceWith(inputElement)
+        
+        inputElement.addEventListener('blur', () => {
+          currentTeamMember = img
+          fetch(`http://localhost:3000/team/${currentTeamMember.id}`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              name: inputElement.value
+            })
+          })
+          .then(resp => resp.json())
+          .then(data => {
+            sideBarText.textContent = data.name
+            inputElement.replaceWith(sideBarText)
+          })
+          inputElement.focus()
+        })
+      })
 
       //Deletes img on click 'DELETE fetch'
       sideBarImage.addEventListener('click', () => {
