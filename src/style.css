@@ -20,12 +20,16 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 9999;
-    background: transparent
+    width: 100vw;
+    z-index: 1;
+    background: transparent;
+    transition: background-color 0.2s ease-in-out;
 }
 
-.scrolled {
+#header.active {
     background-color: #e0dcff;
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.5);
+    padding-bottom: 10px;
 }
 
 #title {
@@ -151,7 +155,7 @@ footer a {
     height: 100%; /* 100% Full-height */
     width: 0; /* 0 width - change this with JavaScript */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Stay on top */
+    z-index: 2; /* Stay on top */
     top: 0;
     right: 0;
     background-color: #c2bde4;

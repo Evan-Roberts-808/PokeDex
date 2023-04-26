@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let sideBar = document.querySelector('.sidebar')
   let sideCloseBtn = document.querySelector('.closebtn')
   let body = document.querySelector('#slideAnimation')
+  const header = document.getElementById("header");
+
   // let header = document.querySelector('#header')
 
   //fetching from localhost//
@@ -47,7 +49,13 @@ document.addEventListener('DOMContentLoaded', () => {
     body.style.marginRight = '0%'
   })
 
-
+  window.addEventListener("scroll", () => {
+    if (window.pageYOffset > header.offsetHeight) {
+      header.classList.add("active");
+    } else {
+      header.classList.remove("active");
+    }
+  });
 
   //////////// Functions //////////////
 
