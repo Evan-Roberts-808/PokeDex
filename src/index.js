@@ -183,17 +183,24 @@ document.addEventListener('DOMContentLoaded', () => {
     modalContent.classList.add(`${type1}-bg`)
 
     //close button
-    document.querySelector('.close').addEventListener('click', () => {
-      modal.style.display = "none";
-    })
+//close button
+document.querySelector('.close').addEventListener('click', () => {
+  modal.style.display = "none";
+  modalNormalBtn.removeEventListener('click', switchToNormal);
+  modalShinyBtn.removeEventListener('click', switchToShiny);
+});
 
-    modalNormalBtn.addEventListener('click', () => {
-      modalImg.src = currentPokemon.sprites.front_default;
-    })
+const switchToNormal = () => {
+  modalImg.src = currentPokemon.sprites.front_default;
+};
 
-    modalShinyBtn.addEventListener('click', () => {
-      modalImg.src = currentPokemon.sprites.front_shiny;
-    })
+const switchToShiny = () => {
+  modalImg.src = currentPokemon.sprites.front_shiny;
+};
+
+modalNormalBtn.addEventListener('click', switchToNormal);
+
+modalShinyBtn.addEventListener('click', switchToShiny);
 
     //add to team
     let addToTeamBtn = document.querySelector("#add-to-team")
