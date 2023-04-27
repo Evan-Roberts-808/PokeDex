@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="icon" type="image/png" href="img/icon.png" />
     <title>PokeDex</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -24,7 +25,7 @@
     <section id="header" class="container-fluid">
       <!-- Title -->
       <div class="row justify-content-center">
-        <h2 id="title">PokeDex</h2>
+        <img alt="title" id="title" src="./img/Pokedex.svg" />
       </div>
 
       <!-- Search, Filter, Sort -->
@@ -35,11 +36,6 @@
           placeholder="Enter Name or Dex #"
           for="search-button"
         />
-        <!-- <button id="search-button" type="submit" class="button pushable">
-          <span class="shadow"></span>
-          <span class="edge"></span>
-          <span class="front">Search</span>
-        </button> -->
 
         <label for="gen-filter" id="gen-label">Filter by Gen:</label>
         <select name="gen-filter" id="gen-filter">
@@ -80,7 +76,7 @@
         <button class="pushable" id="show-team">
           <span class="shadow"></span>
           <span class="edge"></span>
-          <span class="front">Show Team</span>
+          <span class="front">Show Favorites</span>
         </button>
         <a href="#pokemon-list">
           <button class="pushable" id="scrollTop">
@@ -95,12 +91,14 @@
     <!-- Team Bar -->
     <div id="mySidebar" class="sidebar">
       <a href="javascript:void(0)" class="closebtn">&times;</a>
-      <h4>Click Pokemon To Remove</h4>
+      <h3 id="favorites">Favorites</h3>
+      <h3>Click Pokemon Image to Remove</h3>
+      <h4>Click Pokemon Name to Rename</h4>
     </div>
 
     <!-- Modal -->
     <div class="modal">
-      <div id="modal-content" class="modal-content">
+      <div id="modal-content" class="modal-content zoomIn">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">X</button>
         </div>
@@ -108,16 +106,18 @@
           <div class="col-sm-6">
             <h3 id="modal-dex-num"></h3>
             <img id="modal-img" />
-            <button type="button" class="pushable" id="normalBtn">
-              <span class="shadow"></span>
-              <span class="edge"></span>
-              <span class="front">Normal Sprite</span>
-            </button>
-            <button type="button" class="pushable" id="shinyBtn">             
-               <span class="shadow"></span>
-              <span class="edge"></span>
-              <span class="front">Shiny Sprite</span>
-            </button>
+            <div class="row justify-content-center">
+              <button type="button" class="pushable" id="normalBtn">
+                <span class="shadow"></span>
+                <span class="edge"></span>
+                <span class="front">Normal Sprite</span>
+              </button>
+              <button type="button" class="pushable" id="shinyBtn">
+                <span class="shadow"></span>
+                <span class="edge"></span>
+                <span class="front">Shiny Sprite</span>
+              </button>
+            </div>
           </div>
           <div class="col-sm-6">
             <h3 id="modal-poke-name"></h3>
@@ -134,23 +134,18 @@
           >
             <span class="shadow"></span>
             <span class="edge"></span>
-            <span class="front">Add to team</span>
+            <span class="front">Add to Favorites</span>
           </button>
         </div>
       </div>
     </div>
-
     <!-- Body -->
     <section class="container" id="pokemon-container">
-      <div id="pokemon-list" class="row justify-content-center">
-        <!-- Placeholder example card to be removed when writing JS-->
-        <!-- <div class="card col-sm-3">
-          <p class="dex-num" id="dex-num">1</p>
-          <img class="poke-img" id="poke-img" src="bulbasaur.png" />
-          <p class="poke-name" id="poke-name">Bulbasaur</p>
-        </div> -->
-      </div>
+      <div id="pokemon-list" class="row justify-content-center"></div>
     </section>
+    <footer id="credit">
+      <img alt="credit" src="./img/unown.svg" />
+    </footer>
     <script src="./src/index.js"></script>
   </body>
 </html>
