@@ -9,6 +9,11 @@ body {
     transition: 0.5s; /*0.5 second transition effect to slide body after sidebar*/
 }
 
+.is-blurred {
+    filter: blur(2px);
+    -webkit-filter: blur(2px);
+  }
+
 .row {
     padding-top: 20px;
 }
@@ -33,8 +38,7 @@ body {
 }
 
 #title {
-    color: #fff;
-    font-size: 50px;
+    width: 20%;
 }
 
 #search, #search-button, #gen-filter, #type-filter {
@@ -45,7 +49,7 @@ body {
     margin-right: 10px;
     margin-bottom: 0px;
     margin-top: 7px;
-    color: #fff;
+    color: #000;
 }
 
 /* Button */
@@ -131,13 +135,14 @@ body {
 
 .card .dex-num {
     margin-top: 30px;
+    font-weight: 500;
 }
 
-.card .pokemon-name {
+.card .poke-name {
     margin-bottom: 30px;
 }
 
-.dex-num, .pokemon-name {
+.dex-num, .poke-name {
     font-weight: 500;
 }
 
@@ -187,7 +192,14 @@ footer a {
   .sidebar h4 { 
     text-align: center;
     font-size: 18px;
-    color: #fff;
+    color: #000;
+    font-weight: 400;
+  }
+
+  .sidebar h3 {
+    text-align: center;
+    font-size: 20px;
+    color: #000;
     font-weight: 400;
   }
 
@@ -200,9 +212,14 @@ footer a {
 
   }
 
-
+  #favorites {
+    font-weight: 500;
+    font-size: 25px;
+    text-align: center;
+  }
 
 /* Modal Styling */
+
 .modal {
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -217,12 +234,16 @@ footer a {
   /* Modal Content */
   .modal-content {
     position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    left: 0;
+    right: 0;
+    top: 30vh;
+    margin: 0 auto;
+    transform: translateY(-30vh);
     background-color: #FEFEFE;
-    width: 60vw;
+    width: 50vw;
     padding: 10px;
+    box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.5);
+    animation: zoomIn 0.5s forwards;
   }
   /* The Close Button */
   .close {
@@ -240,6 +261,7 @@ footer a {
   .modal-header {
     padding: 2px 16px;
     color: #6D6D6D;
+    border: none;
   }
   .modal-body {
     padding: 2px 16px;
@@ -251,8 +273,16 @@ footer a {
     margin: 0 auto;
   }
 
-  #modal-dex-num, #modal-poke-name, #modal-height, #modal-weight {
+  #modal-dex-num, #modal-poke-name, #modal-height, #modal-weight, #modal-types {
     text-align: center;
+  }
+
+  #modal-poke-name {
+    font-weight : 700;
+  }
+
+  #modal-height, #modal-weight, #modal-types {
+    font-weight: 500;
   }
 
   .modal .pushable {
@@ -295,6 +325,36 @@ footer a {
     border-radius: 12px;
     background: #5c5c5c;
 }
+/* Modal Animation */
+@-webkit-keyframes zoomIn {
+    from {
+      opacity: 0;
+      -webkit-transform: scale3d(0, 0, 0);
+      transform: scale3d(0, 0, 0);
+    }
+  
+    50% {
+      opacity: 1;
+    }
+    100% {
+        transform: scale3d(1,1,1)
+    }
+  }
+  
+  @keyframes zoomIn {
+    from {
+      opacity: 0;
+      -webkit-transform: scale3d(0, 0, 0);
+      transform: scale3d(0, 0, 0);
+    }
+  
+    50% {
+      opacity: 1;
+    }
+    100% {
+        transform: scale3d(1,1,1)
+    }
+  }
 
 /* Type Styling */
 
@@ -440,4 +500,9 @@ footer a {
 
 .fairy-bg {
     background-color: #edb5d3;
+}
+
+
+#credit img {
+    width: 15%;
 }
