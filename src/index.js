@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const header = document.getElementById("header");
   let allCards = [document.querySelectorAll('.card')]
   let typeSelector = document.getElementById('type-filter')
-
+  let genSelector = document.getElementById('gen-filter')
   //fetching from localhost//
   fetch('http://localhost:3000/team')
   .then(resp => resp.json())
@@ -82,12 +82,63 @@ document.addEventListener('DOMContentLoaded', () => {
      let pokeDexNum = document.createElement('p')
      pokeDexNum.classList.add('dex-num')
      pokeDexNum.textContent = pokemon.id
-
+     const genP = document.createElement('p')
+     genP.classList.add('gen-num')
      // types on the card, test/
      let pokeTypes = document.createElement('p')
      pokeTypes.classList.add('poke-type')
      pokeTypes.style.display = 'none'
+     let generation
+     
+     
+     if (pokemon.id <= 151) {
+        generation = 'gen-1'
+        genP.textContent = generation
+        genP.style.display = 'none'
+        newCard.append(genP)       
+     } else if (pokemon.id > 151 && pokemon.id <= 251) {
+      generation = 'gen-2'
+      genP.textContent = generation
+      genP.style.display = 'none'
+      newCard.append(genP)       
+    } else if (pokemon.id > 251 && pokemon.id <= 386) {
+      generation = 'gen-3'
+      genP.textContent = generation
+      genP.style.display = 'none'
+      newCard.append(genP)       
+    } else if (pokemon.id > 386 && pokemon.id <= 493) {
+      generation = 'gen-4'
+      genP.textContent = generation
+      genP.style.display = 'none'
+      newCard.append(genP)       
+    } else if (pokemon.id > 493 && pokemon.id <= 649) {
+      generation = 'gen-5'
+      genP.textContent = generation
+      genP.style.display = 'none'
+      newCard.append(genP)       
+    } else if (pokemon.id > 649 && pokemon.id <= 721) {
+      generation = 'gen-6'
+      genP.textContent = generation
+      genP.style.display = 'none'
+      newCard.append(genP)       
+    } else if (pokemon.id > 721 && pokemon.id <= 809) {
+      generation = 'gen-7'
+      genP.textContent = generation
+      genP.style.display = 'none'
+      newCard.append(genP)       
+    } else if (pokemon.id > 809 && pokemon.id <= 905) {
+      generation = 'gen-8'
+      genP.textContent = generation
+      genP.style.display = 'none'
+      newCard.append(genP)       
+    } else if (pokemon.id > 905 && pokemon.id <= 1008) {
+      generation = 'gen-9'
+      genP.textContent = generation
+      genP.style.display = 'none'
+      newCard.append(genP)       
+    }
 
+    
 
      let type1 = "";
      let type2 = "";
@@ -141,7 +192,22 @@ document.addEventListener('DOMContentLoaded', () => {
       })
 
     }) //end of type filter
-     
+   
+    genSelector.addEventListener('change', () => { 
+      let gen = genSelector.value
+      console.log(gen)
+      let allCards = document.querySelectorAll('.card')
+      allCards.forEach(card => {
+        let genNum = card.querySelector('.gen-num').textContent
+        if (gen === 'all-gens' || genNum.includes(gen)) {
+          card.style.display = ''
+        }
+        else {
+          card.style.display = 'none'
+        }
+      })
+
+    })
 
   } //end of renderPokemon
 
