@@ -153,6 +153,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let modalHeight = document.querySelector("#modal-height");
     let modalWeight = document.querySelector("#modal-weight");
     let modalTypes = document.querySelector("#modal-types");
+    let modalNormalBtn = document.querySelector("#normalBtn")
+    let modalShinyBtn = document.querySelector('#shinyBtn')
+
     let heightInM = currentPokemon.height / 10;
     let weightInKg = currentPokemon.weight / 10;
   
@@ -182,6 +185,14 @@ document.addEventListener('DOMContentLoaded', () => {
     //close button
     document.querySelector('.close').addEventListener('click', () => {
       modal.style.display = "none";
+    })
+
+    modalNormalBtn.addEventListener('click', () => {
+      modalImg.src = currentPokemon.sprites.front_default;
+    })
+
+    modalShinyBtn.addEventListener('click', () => {
+      modalImg.src = currentPokemon.sprites.front_shiny;
     })
 
     //add to team
