@@ -1,3 +1,19 @@
 {
-  "team": []
+  "team": [
+    {
+      "img_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png",
+      "name": "jojojojoo",
+      "id": 2
+    },
+    {
+      "img_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/16.png",
+      "name": "pidgey",
+      "id": 3
+    },
+    {
+      "img_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/8.png",
+      "name": "yhfhisdfohifadsohjisfadhuiol",
+      "id": 4
+    }
+  ]
 }

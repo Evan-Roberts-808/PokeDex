@@ -72,7 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   //parses pokeData and renders to DOM
   function renderPokemonCards(pokemon) {
-    // pokemonSort.push(newCard)
      let newCard = document.createElement('div')
      let pokeImg = document.createElement('img')
      pokeImg.src = pokemon.sprites.front_default
@@ -83,13 +82,13 @@ document.addEventListener('DOMContentLoaded', () => {
      let pokeDexNum = document.createElement('p')
      pokeDexNum.classList.add('dex-num')
      pokeDexNum.textContent = pokemon.id
-    //  newCard.append(pokeDexNum, pokeImg, pokeName, pokeTypes)
-    //  pokemonList.append(newCard)
 
      // types on the card, test/
      let pokeTypes = document.createElement('p')
      pokeTypes.classList.add('poke-type')
-     
+     pokeTypes.style.display = 'none'
+
+
      let type1 = "";
      let type2 = "";
      let dualType = false;
@@ -133,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
       let allCards = document.querySelectorAll('.card')
       allCards.forEach(card => {
         let typeName = card.querySelector('.poke-type').textContent
-        if (typeName.includes(type)) {
+        if (type === 'all' || typeName.includes(type)) {
           card.style.display = ''
         }
         else {
