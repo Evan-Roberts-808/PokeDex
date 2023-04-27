@@ -25,32 +25,32 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   //fetching from poke api//
-  fetch('https://pokeapi.co/api/v2/pokemon?limit=1008')
+  fetch('https://pokeapi.co/api/v2/pokemon?limit=1008')  // This required us to parse through the link to get the pokemon's name and url
      .then(response => response.json())
      .then(allPokemon => {
-        const pokemonPromises = allPokemon.results.map(pokemon => fetchPokemonData(pokemon));
-        return Promise.all(pokemonPromises);
+        const pokemonPromises = allPokemon.results.map(pokemon => fetchPokemonData(pokemon)); // fetch pokemon data function loops through the urls and return pokemons objects
+        return Promise.all(pokemonPromises); //data returns out of order
      })
      .then(pokemonData => {
         pokemonData.sort((a, b) => a.id - b.id); // Sort the data by ID
-        pokemonData.forEach(pokemon => renderPokemonCards(pokemon));
+        pokemonData.forEach(pokemon => renderPokemonCards(pokemon)); 
      });
 
   ///////// Event Listeners //////////
 
-  search.addEventListener('keyup', searchFunctionality)
+  search.addEventListener('keyup', searchFunctionality) // listens for keypresses and invokes the search function
 
-  showTeamBtn.addEventListener('click', () => {
+  showTeamBtn.addEventListener('click', () => { // displays the Favorites bar
     sideBar.style.width = "20%"
     body.style.marginRight = "20%"
   })
 
-  sideCloseBtn.addEventListener('click', () => {
+  sideCloseBtn.addEventListener('click', () => { // closes the Favorites bar
     sideBar.style.width = '0%'
     body.style.marginRight = '0%'
   })
 
-  window.addEventListener("scroll", () => {
+  window.addEventListener("scroll", () => { // adds bg color to the header if scrolled passed the header height
     if (window.pageYOffset > header.offsetHeight) {
       header.classList.add("active");
     } else {
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   //parses pokeData and renders to DOM
-  function renderPokemonCards(pokemon) {
+  function renderPokemonCards(pokemon) { // creates and displays the pokemon cards in the body 
      let newCard = document.createElement('div')
      let pokeImg = document.createElement('img')
      pokeImg.src = pokemon.sprites.front_default
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
      let generation
      
      
-     if (pokemon.id <= 151) {
+     if (pokemon.id <= 151) {  // checks the dex num of each pokemon to assign a gen
         generation = 'gen-1'
         genP.textContent = generation
         genP.style.display = 'none'
@@ -140,10 +140,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     
 
-     let type1 = "";
+     let type1 = ""; 
      let type2 = "";
      let dualType = false;
-     pokemon.types.forEach((type) => {
+     pokemon.types.forEach((type) => { // assigns type to each card
        if (!dualType) {
          type1 = type.type.name;
          dualType = true;
@@ -151,32 +151,32 @@ document.addEventListener('DOMContentLoaded', () => {
          type2 = type.type.name;
        }})
 
-       pokeTypes.textContent = type2
+       pokeTypes.textContent = type2 // if type 2 exists, set to type1/type2 else, just set to type1
        ? `type: ${type1} / ${type2}`
        : `type: ${type1}`;
 
-       newCard.classList.add('card', 'col-sm-3', `${type1}-bg`)
+       newCard.classList.add('card', 'col-sm-3', `${type1}-bg`) //passing in type1 variable with -bg to make a classname that matches the css selector
 
      newCard.append(pokeDexNum, pokeImg, pokeName, pokeTypes)
      pokemonList.append(newCard)
 
 
-     newCard.addEventListener('mouseover', () => {
+     newCard.addEventListener('mouseover', () => { // increases scale when hovering over a card
         newCard.classList.add('hover')
      })
 
-     newCard.addEventListener('mouseleave', () => {
+     newCard.addEventListener('mouseleave', () => { // reduces scale when mouse leaves the card
       newCard.classList.remove('hover')
    })
 
      //Modal event
-     newCard.addEventListener('click', () => {
+     newCard.addEventListener('click', () => { // displays modal with pokemon info
         currentPokemon = pokemon
         displayModal(currentPokemon)
      })
 
     //type filter search
-     typeSelector.addEventListener('change', () => { 
+     typeSelector.addEventListener('change', () => { // displays all pokemon with the type selected
       let type = typeSelector.value
       console.log(type)
       
@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }) //end of type filter
    
-    genSelector.addEventListener('change', () => { 
+    genSelector.addEventListener('change', () => { // displays all pokemon with the gen selected
       let gen = genSelector.value
       console.log(gen)
       let allCards = document.querySelectorAll('.card')
@@ -212,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
   } //end of renderPokemon
 
 //Populates content to modal
-  function displayModal(currentPokemon) {
+  function displayModal(currentPokemon) { // displays modal
     modal.style.display = "block";
     let modalImg = document.querySelector("#modal-img");
     let modalName = document.querySelector("#modal-poke-name");
@@ -256,11 +256,11 @@ document.querySelector('.close').addEventListener('click', () => {
   modalShinyBtn.removeEventListener('click', switchToShiny);
 });
 
-const switchToNormal = () => {
+const switchToNormal = () => { // switches the pokemons sprite to the normal image
   modalImg.src = currentPokemon.sprites.front_default;
 };
 
-const switchToShiny = () => {
+const switchToShiny = () => { // switches the pokemons sprite to the shiny image
   modalImg.src = currentPokemon.sprites.front_shiny;
 };
 
@@ -268,7 +268,7 @@ modalNormalBtn.addEventListener('click', switchToNormal);
 
 modalShinyBtn.addEventListener('click', switchToShiny);
 
-    //add to team
+    //add to Favorites
     let addToTeamBtn = document.querySelector("#add-to-team")
     addToTeamBtn.addEventListener('click', () => {
       const imgUrl = currentPokemon.sprites.front_default
@@ -322,7 +322,7 @@ modalShinyBtn.addEventListener('click', switchToShiny);
         inputElement.value = sideBarText.textContent
         sideBarText.replaceWith(inputElement)
         
-        inputElement.addEventListener('blur', () => {
+        inputElement.addEventListener('blur', () => { // blur event for setting the nickname
           currentTeamMember = img
           fetch(`http://localhost:3000/team/${currentTeamMember.id}`, {
             method: 'PATCH',
